@@ -3,50 +3,12 @@ import { Play, Pause, MoreHorizontal, FileText } from 'lucide-react';
 import { VoiceBlast } from '../types';
 import { StatusBadge } from './StatusBadge';
 
-const mockData: VoiceBlast[] = [
-  {
-    id: '1',
-    date: 'Nov 26, 2024',
-    time: '09:45 AM',
-    duration: '0:24',
-    smsPreview: 'Flash Sale! Get 20% off all rice bags today only at Kantin Kwari market. Visit stall 44...',
-    status: 'Sent',
-  },
-  {
-    id: '2',
-    date: 'Nov 25, 2024',
-    time: '02:15 PM',
-    duration: '0:45',
-    smsPreview: 'New arrival: High quality Swiss lace available now. Come see the new patterns before they...',
-    status: 'Sent',
-  },
-  {
-    id: '3',
-    date: 'Nov 25, 2024',
-    time: '11:30 AM',
-    duration: '0:32',
-    smsPreview: 'Restock alert: Samsung Galaxy A-series now available in bulk. Special prices for wholesal...',
-    status: 'Sent',
-  },
-  {
-    id: '4',
-    date: 'Nov 24, 2024',
-    time: '04:20 PM',
-    duration: '0:18',
-    smsPreview: 'Reminder: Friday prayers discount. All electronics 5% off until sunset. Don\'t miss out!',
-    status: 'Processing',
-  },
-  {
-    id: '5',
-    date: 'Nov 23, 2024',
-    time: '10:00 AM',
-    duration: '0:35',
-    smsPreview: 'Season\'s greeting from Muryar Kasuwa! Check our new collection of traditional caps and...',
-    status: 'Sent',
-  },
-];
+// We defined the Props interface so this component knows it expects data
+interface VoiceBlastTableProps {
+  data: VoiceBlast[];
+}
 
-export const VoiceBlastTable: React.FC = () => {
+export const VoiceBlastTable: React.FC<VoiceBlastTableProps> = ({ data }) => {
   // Track which audio is playing (mock functionality)
   const [playingId, setPlayingId] = useState<string | null>(null);
 
@@ -76,7 +38,7 @@ export const VoiceBlastTable: React.FC = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
-            {mockData.map((item) => (
+            {data.map((item) => (
               <tr 
                 key={item.id} 
                 className="hover:bg-gray-50 transition-colors duration-150 group"
@@ -141,10 +103,10 @@ export const VoiceBlastTable: React.FC = () => {
         </table>
       </div>
       
-      {/* Footer Pagination (Visual only) */}
+      {/* Footer Pagination (Restored!) */}
       <div className="px-6 py-4 border-t border-gray-100 flex items-center justify-between bg-gray-50/30">
         <p className="text-xs text-gray-500">
-          Showing <span className="font-medium text-gray-900">1</span> to <span className="font-medium text-gray-900">5</span> of <span className="font-medium text-gray-900">24</span> results
+          Showing <span className="font-medium text-gray-900">1</span> to <span className="font-medium text-gray-900">{data.length}</span> of <span className="font-medium text-gray-900">24</span> results
         </p>
         <div className="flex items-center gap-2">
           <button disabled className="px-3 py-1 text-xs font-medium text-gray-400 bg-white border border-gray-200 rounded cursor-not-allowed">

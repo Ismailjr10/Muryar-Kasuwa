@@ -1,16 +1,18 @@
 import React from 'react';
-import { LayoutDashboard, History, Settings, LogOut, Menu, X } from 'lucide-react';
+import { LayoutDashboard, History, Settings, LogOut, X } from 'lucide-react';
 
 interface SidebarProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  currentView: string;
+  setCurrentView: (view: string) => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen, currentView, setCurrentView }) => {
   const navItems = [
-    { icon: LayoutDashboard, label: 'Dashboard', active: true },
-    { icon: History, label: 'Campaign History', active: false },
-    { icon: Settings, label: 'Settings', active: false },
+    { id: 'dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+    { id: 'history', icon: History, label: 'Campaign History' },
+    { id: 'settings', icon: Settings, label: 'Settings' },
   ];
 
   return (
@@ -49,18 +51,21 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
           {/* Navigation Links */}
           <nav className="flex-1 px-4 py-6 space-y-1">
             {navItems.map((item) => (
-              <a
-                key={item.label}
-                href="#"
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
-                  item.active 
+              <button
+                key={item.id}
+                onClick={() => {
+                  setCurrentView(item.id);
+                  setIsOpen(false);
+                }}
+                className={`flex w-full items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
+                  currentView === item.id
                     ? 'bg-[#008751]/10 text-[#008751]' 
                     : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                 }`}
               >
-                <item.icon size={20} className={item.active ? 'text-[#008751]' : 'text-gray-400'} />
+                <item.icon size={20} className={currentView === item.id ? 'text-[#008751]' : 'text-gray-400'} />
                 {item.label}
-              </a>
+              </button>
             ))}
           </nav>
 
